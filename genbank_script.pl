@@ -82,13 +82,14 @@ my @genes = ();
 foreach my $range (@captured_ranges) {
 my @data = ();
     foreach my $line (@$range) {
+        # If the pattern matches "gene     ", set the flag to indicate we keep the lines from hereon
         if ($line =~ /^\s*gene\s+/ ) {
             $in_range = 1;
-        }elsif($line =~ /^\s*CDS\s+(.*)/){
+        }elsif($line =~ /^\s*CDS\s+(.*)/){ # Else If the pattern matches "CDS      ", set the flag to indicate we keep the lines from hereon
             my ($range_start, $range_end) = extract_range($1);
             $in_range = 1;
             # print $range_start, "..", $range_end, "\n";
-        }elsif ($line =~ /^\s{5}\w+\s{8}/) {
+        }elsif ($line =~ /^\s{5}\w+\s{8}/) { # Else If the pattern matches anything like the above sections, set the flag to indicate we don't keep the lines from hereon
             $in_range = 0;
         }
 
